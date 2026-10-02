@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Python 從零到 APCS</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f6f8;--ink:#1c2a39;--mut:#5b6b7b;--pen:#2d5ca6;--hl:#ffe680;--red:#c63f38;--card:#fff;--code:#e9eff4;--line:#c9d6e0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17212b;--ink:#e6edf3;--mut:#9aabba;--pen:#7aa7ee;--hl:#6b5a14;--red:#ff8a80;--card:#1f2c38;--code:#142029;--line:#34465a}}
+:root[data-theme="dark"]{--bg:#17212b;--ink:#e6edf3;--mut:#9aabba;--pen:#7aa7ee;--hl:#6b5a14;--red:#ff8a80;--card:#1f2c38;--code:#142029;--line:#34465a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.8 "Noto Sans TC",system-ui,sans-serif;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:28px 28px;background-attachment:fixed}
+header{padding:28px 20px 8px;max-width:1040px;margin:auto}
+h1{font-size:clamp(28px,6vw,46px);margin:0;font-weight:800;line-height:1.25}
+h1 mark{background:var(--hl);color:inherit;padding:0 .2em}
+header p{color:var(--mut);margin:.6em 0 0;max-width:36em}
+.bar{height:8px;background:var(--code);border-radius:4px;margin-top:16px;overflow:hidden;max-width:420px}
+.bar i{display:block;height:100%;width:0;background:var(--pen);transition:width .3s}
+.wrap{display:flex;gap:20px;max-width:1040px;margin:auto;padding:16px 20px 60px;align-items:flex-start}
+nav{width:240px;flex:none;position:sticky;top:12px;background:var(--card);border:2px solid var(--ink);border-radius:6px;padding:10px 6px;max-height:calc(100vh - 24px);overflow:auto}
+nav h3{margin:10px 10px 2px;font-size:15px;color:var(--pen)}
+nav small{display:block;margin:0 10px 4px;color:var(--mut);font-size:12px;line-height:1.4}
+nav button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--ink);font:inherit;font-size:15px;padding:5px 10px;border-radius:4px;cursor:pointer;line-height:1.5}
+nav button:hover{background:var(--code)}
+nav button.on{background:var(--hl);font-weight:500}
+nav button.done::after{content:" ✔";color:var(--pen)}
+main{flex:1;min-width:0;background:var(--card);border:2px solid var(--ink);border-radius:6px;padding:24px 26px}
+main h2{margin:0 0 4px;font-size:26px}
+.stage{color:var(--pen);font-size:14px;font-weight:500}
+main p,main li{max-width:40em}
+code{background:var(--code);padding:1px 6px;border-radius:3px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em}
+pre{background:var(--code);border-left:4px solid var(--pen);padding:14px 16px;overflow-x:auto;border-radius:0 4px 4px 0;margin:14px 0;line-height:1.6}
+pre code{padding:0;background:none;font-size:14px}
+.q{margin-top:22px;border-top:2px dashed var(--line);padding-top:16px}
+.q b{display:block;margin-bottom:8px}
+.q button{display:block;width:100%;text-align:left;margin:6px 0;padding:8px 12px;font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:4px;cursor:pointer}
+.q button:focus-visible,nav button:focus-visible,.pn button:focus-visible{outline:3px solid var(--pen);outline-offset:2px}
+.q button.ok{border-color:var(--pen);background:var(--hl)}
+.q button.no{border-color:var(--red)}
+.fb{margin-top:8px;font-size:15px;color:var(--mut)}
+.pn{display:flex;justify-content:space-between;margin-top:24px}
+.pn button{font:inherit;padding:8px 18px;border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:4px;cursor:pointer}
+.pn button:disabled{opacity:.35;cursor:default}
+@media(max-width:760px){.wrap{flex-direction:column}nav{width:100%;position:static;max-height:240px}main{padding:18px}}
+.more{background:var(--bg);border-left:4px solid var(--hl);padding:4px 16px;margin:14px 0;max-width:42em}.more h4{margin:10px 0 0;font-size:17px}.qq{margin:14px 0}.qq p{margin:0 0 4px;font-weight:500}
+.ex{background:var(--bg);border:1.5px solid var(--red);border-radius:4px;padding:2px 14px;margin-top:8px;color:var(--ink)}.ex p{margin:8px 0}.ex button{font:inherit;padding:5px 12px;border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:4px;cursor:pointer;margin-bottom:10px}
+</style></head><body>
+<header><h1>Python <mark>從零到 APCS</mark></h1>
+<p>四個階段、14 個單元。每單元有重點說明、範例程式與自我檢查。</p>
+<div class="bar"><i id="pb"></i></div></header>
+<div class="wrap"><nav id="nav" aria-label="單元目錄"></nav><main id="m" tabindex="-1"></main></div>
+<script>
+var S=[
+["新手","從第一行程式開始"],["基礎","資料結構與函式"],["進階","演算法的基本功"],["APCS","對應檢定的題型"]];
+var U=[
+[0,"print 與變數","程式是一行一行由上往下執行。<code>print()</code> 顯示結果，<code>=</code> 把值存進變數。變數名稱可用英文、數字、底線，但不能以數字開頭。","name = \"小明\"\nage = 16\nprint(\"Hi\", name)\nprint(age + 1)","執行 x = 5 再 x = x + 2 後，x 是多少？",["5","7","52"],1,"x + 2 以舊值 5 計算，結果 7 再存回 x。"],
+[0,"輸入與運算","<code>input()</code> 讀進來的一定是字串，要算數就先用 <code>int()</code> 轉換。<code>/</code> 得到小數，<code>//</code> 取商，<code>%</code> 取餘數。","a = int(input())\nb = int(input())\nprint(a // b, a % b)","17 // 5 與 17 % 5 分別是？",["3 與 2","3.4 與 2","2 與 3"],0,"17 = 5×3 + 2，商 3、餘 2。"],
+[0,"if 條件判斷","用比較運算（<code>== != &lt; &gt;</code>）搭配 <code>and / or / not</code>。Python 用<b>縮排</b>表示區塊，同一區塊要對齊。","n = int(input())\nif n % 2 == 0:\n    print(\"偶數\")\nelif n > 100:\n    print(\"大奇數\")\nelse:\n    print(\"奇數\")","判斷「是否等於 3」要用哪個符號？",["=","==","=>"],1,"= 是指定，== 才是比較。"],
+[0,"for / while 迴圈","<code>range(n)</code> 產生 0 到 n-1。已知次數用 for，不知道何時結束用 while。<code>break</code> 跳出，<code>continue</code> 略過本次。","total = 0\nfor i in range(1, 101):\n    total += i\nprint(total)  # 5050","range(2, 8, 2) 會產生哪些數？",["2 4 6","2 4 6 8","2 3 4 5 6 7"],0,"從 2 開始、每次加 2，到 8 之前停止。"],
+[1,"list 串列","list 存一排資料，索引從 0 開始，<code>-1</code> 是最後一個。常用 <code>append、len、sum、max</code> 與切片 <code>a[1:3]</code>。","a = list(map(int, input().split()))\nprint(len(a), sum(a), max(a))\nprint(a[::-1])","a = [4,5,6]，a[-1] 是？",["4","5","6"],2,"負索引從尾端算起，-1 是最後一個。"],
+[1,"字串處理","字串不可修改，但可切片、走訪。常用 <code>split、strip、upper、count、find、replace</code>。<code>f\"{x}\"</code> 可以把變數塞進字串。","s = \"hello world\"\nprint(s.upper(), s.count(\"o\"))\nprint(f\"長度 {len(s)}\")\nprint(s[::-1])","\"abc\" * 2 的結果是？",["abcabc","abc2","錯誤"],0,"字串乘整數代表重複。"],
+[1,"函式","<code>def</code> 把一段邏輯包起來，用 <code>return</code> 回傳結果。變數在函式裡宣告就是區域變數，外面看不到。","def is_prime(n):\n    if n < 2:\n        return False\n    for d in range(2, int(n ** 0.5) + 1):\n        if n % d == 0:\n            return False\n    return True\n\nprint([x for x in range(30) if is_prime(x)])","為什麼判斷質數只需檢查到 √n？",["比較省記憶體","因數成對出現，較小的一個必 ≤ √n","Python 規定"],1,"若 n = a×b，a、b 中至少有一個不超過 √n。"],
+[1,"dict 與 set","dict 以「鍵」查「值」，查找平均 O(1)；set 自動去重。計數題幾乎都用 dict。","cnt = {}\nfor ch in \"banana\":\n    cnt[ch] = cnt.get(ch, 0) + 1\nprint(cnt)          # {'b':1,'a':3,'n':2}\nprint(set([1,1,2])) # {1, 2}","想統計每個字出現幾次，最適合用？",["list","dict","tuple"],1,"鍵放字元，值放次數。"],
+[2,"遞迴","函式呼叫自己。必須有<b>終止條件</b>，並讓問題每次變小。","def fact(n):\n    if n <= 1:\n        return 1\n    return n * fact(n - 1)\n\ndef fib(n):\n    return n if n < 2 else fib(n-1) + fib(n-2)\nprint(fact(5), fib(10))","遞迴少了終止條件會怎樣？",["自動停止","一直呼叫直到 RecursionError","回傳 0"],1,"Python 預設遞迴深度約 1000 層。"],
+[2,"排序與二分搜尋","<code>sorted()</code> 與 <code>list.sort()</code> 都是 O(n log n)。資料已排序時，二分搜尋每次砍掉一半，只要 O(log n)。","def bsearch(a, x):\n    lo, hi = 0, len(a) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if a[mid] == x: return mid\n        if a[mid] < x: lo = mid + 1\n        else: hi = mid - 1\n    return -1\nprint(bsearch([1,3,5,7,9], 7))","二分搜尋的前提是？",["資料已排序","資料都是整數","資料不重複"],0,"沒有排序就無法判斷該丟掉哪一半。"],
+[2,"時間複雜度","用「資料量變大時，步數怎麼長」評估程式。常見：O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(2ⁿ)。經驗上 Python 一秒約跑 10⁶～10⁷ 步。","n = 1000\ncnt = 0\nfor i in range(n):\n    for j in range(n):   # 巢狀：n × n\n        cnt += 1\nprint(cnt)  # 10^6","兩層各跑 n 次的巢狀迴圈是？",["O(n)","O(n²)","O(log n)"],1,"n × n = n²。"],
+[2,"stack 與 queue","stack 後進先出（用 list 的 append / pop）；queue 先進先出，請用 <code>collections.deque</code>，因為 list.pop(0) 是 O(n)。","from collections import deque\nst = []; st.append(1); st.append(2); print(st.pop())  # 2\nq = deque([1, 2]); q.append(3); print(q.popleft())  # 1","括號配對檢查適合用哪種結構？",["stack","queue","set"],0,"最後出現的左括號要最先被配對。"],
+[3,"APCS 題型與輸入技巧","APCS 分「觀念題」（讀程式、複雜度、資料結構）與「實作題」（寫完整程式，常見輸入為多行數字）。實作題輸入量大時，改用 <code>sys.stdin</code> 比 input() 快。","import sys\ndata = sys.stdin.read().split()\nn = int(data[0])\na = list(map(int, data[1:n+1]))\nprint(sum(a))","輸入資料很大時，哪種讀法較快？",["每行 input()","sys.stdin.read() 一次讀完","手動逐字元讀"],1,"減少 I/O 呼叫次數，速度差很多。"],
+[3,"DFS 與 BFS","走迷宮、數連通區塊、最短步數都是圖搜尋。DFS 用遞迴或 stack，BFS 用 queue，且<b>無權圖的最短路徑</b>要用 BFS。","from collections import deque\ndef bfs(g, s):\n    dist = {s: 0}; q = deque([s])\n    while q:\n        u = q.popleft()\n        for v in g[u]:\n            if v not in dist:\n                dist[v] = dist[u] + 1\n                q.append(v)\n    return dist\nprint(bfs({0:[1,2],1:[3],2:[3],3:[]}, 0))","求無權圖中兩點的最少步數，應使用？",["DFS","BFS","排序"],1,"BFS 依距離一層一層擴張，第一次到達即最短。"],
+[3,"動態規劃與貪心","DP：把大問題拆成重疊的小問題並記住答案。先定義「狀態代表什麼」，再寫轉移式。貪心則每步選當下最好，需要證明正確。","# 爬 n 階樓梯，每次 1 或 2 階，有幾種走法\nn = 10\ndp = [1, 1] + [0] * (n - 1)\nfor i in range(2, n + 1):\n    dp[i] = dp[i-1] + dp[i-2]\nprint(dp[n])  # 89","DP 解法比純遞迴 fib 快，主因是？",["語法比較短","避免重複計算相同子問題","用了迴圈"],1,"每個狀態只算一次並記下來。"]];
+var X=[
+{m:"<h4>為什麼要先學 print 與變數？</h4>變數像貼了標籤的盒子：標籤是名字，盒子裡是值。<code>print</code> 可一次印多個值，用逗號分隔，中間自動補空白；用 <code>sep=''</code> 或 <code>end=''</code> 可改分隔與結尾。型態常見四種：<code>int</code> 整數、<code>float</code> 小數、<code>str</code> 字串、<code>bool</code> 是非。用 <code>type(x)</code> 可查看型態。",c:"a, b = 3, 4        # 同時指定\na, b = b, a        # 交換兩個變數\nprint(a, b, sep=' | ')\nprint(type(3.5), type('3'), type(True))",q:[["print('3' + '4') 的結果是？",["7","34","錯誤"],1,"兩個都是字串，+ 代表接在一起。"],["下列哪個不是合法的變數名稱？",["score_1","_x","2nd"],2,"變數名稱不能以數字開頭。"]]},
+{m:"<h4>輸入的常見寫法</h4>同一行有多個數字時，用 <code>split()</code> 拆開再轉型：<code>a, b = map(int, input().split())</code>。運算順序和數學一樣，先乘除後加減，括號最優先。<code>**</code> 是次方，<code>2 ** 10</code> 是 1024。<code>divmod(a, b)</code> 一次回傳商與餘數。",c:"h, m = map(int, input().split())  # 例如輸入 135 40\ntotal = h * 60 + m\nprint(total)\nprint(divmod(total, 60))",q:[["input() 讀到 '12'，要做加法應該？",["直接 + 1","先 int() 轉換","先 str() 轉換"],1,"input 回傳字串，需先轉成整數。"],["7 % 3 * 2 的結果是？",["2","1","0"],0,"% 與 * 同級、由左到右：7 % 3 = 1，1 × 2 = 2。"]]},
+{m:"<h4>判斷寫法與常見錯誤</h4>if 可以巢狀，也可以用 <code>and</code> 合併條件。Python 允許連續比較：<code>0 &lt; x &lt; 10</code>。<b>閏年</b>是經典題：4 的倍數且不是 100 的倍數，或是 400 的倍數。注意 elif 只會執行<b>第一個</b>成立的分支，所以條件順序很重要。",c:"y = int(input())\nif (y % 4 == 0 and y % 100 != 0) or y % 400 == 0:\n    print('閏年')\nelse:\n    print('平年')",q:[["2100 年是閏年嗎？",["是，4 的倍數","不是，100 的倍數但不是 400 的倍數","不一定"],1,"2100 % 100 == 0 且 2100 % 400 != 0。"],["x=5 時，0 < x < 10 的結果是？",["True","False","錯誤"],0,"Python 支援連續比較。"]]},
+{m:"<h4>巢狀迴圈與累加器</h4>常見模式是「累加器」：先設初始值，迴圈內更新。巢狀迴圈時，內層會完整跑完才換外層下一輪。印圖形、九九乘法表都用這招。while 要確保條件最後會變 False，否則就是無窮迴圈。",c:"for i in range(1, 4):\n    for j in range(1, 4):\n        print(i * j, end=' ')\n    print()          # 換行\n\nn = 27; steps = 0\nwhile n != 1:        # 考拉茲數列\n    n = n // 2 if n % 2 == 0 else 3 * n + 1\n    steps += 1\nprint(steps)",q:[["for i in range(3): for j in range(2): 內層 print 會執行幾次？",["5","6","3"],1,"3 × 2 = 6。"],["while 迴圈中 continue 的作用是？",["結束整個迴圈","略過本輪剩下的程式、進入下一輪","暫停程式"],1,"continue 只跳過當輪，break 才是結束。"]]},
+{c:"a = [3, 1, 2]\na.sort(); a.insert(0, 9)\nprint(a, a.index(2), 2 in a)\nsq = [x * x for x in range(5)]  # 串列生成式",q:[["a = [1,2,3,4,5]，a[1:4] 是？",["[1,2,3]","[2,3,4]","[2,3,4,5]"],1,"切片含頭不含尾。"]]},
+{c:"s = ' Py,Thon '\nprint(s.strip().split(','))\nprint('a-b-c'.replace('-', ''))\nprint('abc' < 'abd', ord('a'), chr(98))",q:[["s = 'python'，s[0] = 'P' 會？",["變成 'Python'","發生 TypeError","沒有作用"],1,"字串不可變，要用 'P' + s[1:] 重組。"]]},
+{c:"def area(w, h=1):   # h 有預設值\n    return w * h\nprint(area(3), area(3, 4))\ndef mm(a):\n    return min(a), max(a)  # 可回傳多個值\nlo, hi = mm([4, 2, 9])",q:[["函式沒有 return 時，回傳值是？",["0","None","空字串"],1,"沒有 return 就回傳 None。"]]},
+{c:"d = {'a': 1}\nd['b'] = 2\nfor k, v in d.items():\n    print(k, v)\nprint('a' in d, len(d))\nA, B = {1,2,3}, {2,3,4}\nprint(A & B, A | B)",q:[["要刪除 list 中的重複元素（不管順序），最快的做法是？",["雙層迴圈比對","轉成 set","sort 後再看"],1,"set 自動去重，轉換為 O(n)。"]]},
+{c:"def hanoi(n, a, b, c):\n    if n == 0: return 0\n    return hanoi(n-1, a, c, b) + 1 + hanoi(n-1, c, b, a)\nprint(hanoi(3, 'A', 'B', 'C'))  # 7",q:[["fact(4) 會呼叫 fact 共幾次（含第一次）？",["3","4","5"],1,"fact(4)→3→2→1，共 4 次。"]]},
+{c:"a = [(2,'b'), (1,'z'), (2,'a')]\na.sort(key=lambda t: (t[0], t[1]))\nprint(a)\nb = sorted([3,1,2], reverse=True)",q:[["對 n=10⁶ 的資料，下列哪個做法在 Python 通常會超時？",["sort()","雙層迴圈比對所有組合","二分搜尋"],1,"O(n²) 約 10¹² 步，遠超限制。"]]},
+{c:"n = 10**5\nprint(n * (n + 1) // 2)   # O(1) 公式\n# 比起迴圈相加 O(n)，公式只需 O(1)",q:[["一層迴圈內每次都用 list.pop(0)，整體複雜度約是？",["O(n)","O(n²)","O(log n)"],1,"pop(0) 本身是 O(n)，再乘以迴圈 n 次。"]]},
+{c:"s = '([]{})'; st = []\npair = {')':'(', ']':'[', '}':'{'}\nok = True\nfor ch in s:\n    if ch in pair:\n        if not st or st.pop() != pair[ch]: ok = False\n    else:\n        st.append(ch)\nprint(ok and not st)",q:[["依序 push 1,2,3，再 pop 一次，接著 pop 得到？",["1","2","3"],1,"第一次 pop 取出 3，第二次取出 2。"]]},
+{c:"import sys\nfor line in sys.stdin:       # 逐行讀到結束\n    x, y = map(int, line.split())\n    print(x + y)",q:[["APCS 實作題通常包含什麼？",["只考語法","多個測資，需正確且在時限內","只看程式長度"],1,"需要正確性與效率兼顧。"]]},
+{c:"def dfs(g, u, seen):\n    seen.add(u)\n    for v in g[u]:\n        if v not in seen:\n            dfs(g, v, seen)\ng = {0:[1],1:[0,2],2:[1],3:[]}\nseen = set(); dfs(g, 0, seen)\nprint(len(seen))  # 3",q:[["用 DFS 計算連通區塊數，應該？",["對每個未拜訪點各搜尋一次並計數","只從 0 搜一次","排序後計算"],0,"每次新搜尋代表一個新的區塊。"]]},
+{c:"# 硬幣 [1,5,10]，湊 n 元最少枚數（DP）\nn = 12; INF = 10**9\ndp = [0] + [INF] * n\nfor i in range(1, n + 1):\n    for c in (1, 5, 10):\n        if i >= c: dp[i] = min(dp[i], dp[i-c] + 1)\nprint(dp[n])  # 3",q:[["設計 DP 的第一步通常是？",["直接寫迴圈","定義狀態代表什麼","先排序"],1,"狀態定義清楚，轉移式才寫得出來。"]]}];
+var cur=0,done={},ok={};
+try{done=JSON.parse(localStorage.getItem("pyapcs")||"{}")}catch(e){}
+function save(){try{localStorage.setItem("pyapcs",JSON.stringify(done))}catch(e){}}
+function nav(){var h="<button onclick='book()'>📒 錯題本（"+Object.keys(W).length+"）</button>";S.forEach(function(s,si){h+="<h3>"+s[0]+"</h3><small>"+s[1]+"</small>";U.forEach(function(u,i){if(u[0]==si)h+="<button class='"+(i==cur?"on ":"")+(done[i]?"done":"")+"' onclick='go("+i+")'>"+u[1]+"</button>"})});
+document.getElementById("nav").innerHTML=h;
+document.getElementById("pb").style.width=Object.keys(done).length/U.length*100+"%"}
+function esc(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function Q(i){var u=U[i];return [[u[4],u[5],u[6],u[7]]].concat(X[i].q||[])}
+function go(i){cur=i;ok[i]=ok[i]||{};var u=U[i],x=X[i],h="<div class='stage'>"+S[u[0]][0]+"・第 "+(i+1)+" 單元</div><h2>"+u[1]+"</h2><p>"+u[2]+"</p><pre><code>"+esc(u[3])+"</code></pre>";
+if(x.m)h+="<div class='more'>"+x.m+"</div>";
+if(x.c)h+="<p><b>再看一個例子：</b></p><pre><code>"+esc(x.c)+"</code></pre>";
+h+="<div class='q'><b>自我檢查（"+Q(i).length+" 題）</b>"+Q(i).map(function(q,n){return "<div class='qq'><p>"+(n+1)+". "+q[0]+"</p>"+q[1].map(function(o,k){return "<button onclick='ans("+n+","+k+",this)'>"+esc(o)+"</button>"}).join("")+"<div class='fb' id='fb"+n+"' aria-live='polite'></div></div>"}).join("")+"</div><div class='pn'><button "+(i?"":"disabled ")+"onclick='go("+(i-1)+")'>上一單元</button><button "+(i<U.length-1?"":"disabled ")+"onclick='go("+(i+1)+")'>下一單元</button></div>";
+var m=document.getElementById("m");m.innerHTML=h;nav();if(arguments.length&&window.scrollY>150)m.scrollIntoView()}
+var W={};try{W=JSON.parse(localStorage.getItem("pyapcs_w")||"{}")}catch(e){}
+function saveW(){try{localStorage.setItem("pyapcs_w",JSON.stringify(W))}catch(e){}}
+function ex(q,k,u){return "<div class='ex'><p><b>✘ 你選的：</b>"+esc(q[1][k])+"</p><p><b>✔ 正確答案：</b>"+esc(q[1][q[2]])+"</p><p><b>詳解：</b>"+q[3]+"</p><p><b>回頭複習「"+u[1]+"」：</b>"+u[2]+"</p><p>已幫你標出正確選項，點一下它就算完成這題；這題也已加入錯題本。</p></div>"}
+function ans(n,k,b){var q=Q(cur)[n],f=document.getElementById("fb"+n),key=cur+"-"+n;
+if(k==q[2]){b.className="ok";f.innerHTML="✔ 答對了。"+q[3];ok[cur][n]=1;delete W[key];saveW();if(Object.keys(ok[cur]).length==Q(cur).length){done[cur]=1;save()}nav()}
+else{b.className="no";b.parentNode.querySelectorAll("button")[q[2]].className="ok";f.innerHTML=ex(q,k,U[cur]);W[key]=1;saveW();nav()}}
+function book(){var h="<h2>錯題本</h2>",ks=Object.keys(W);if(!ks.length)h+="<p>目前沒有錯題。答錯的題目會自動收進來，之後答對就會移除。</p>";
+ks.forEach(function(k){var i=+k.split("-")[0],n=+k.split("-")[1],q=Q(i)[n];h+="<div class='ex'><p><b>"+U[i][1]+"</b>：<br>"+q[0]+"</p><p><b>✔ 正確答案：</b>"+esc(q[1][q[2]])+"</p><p><b>詳解：</b>"+q[3]+"</p><button onclick='go("+i+")'>回到這個單元重做</button></div>"});
+document.getElementById("m").innerHTML=h;nav()}
+go(0);
+</script></body></html>
